@@ -45,7 +45,6 @@ export default function UserRoutes(app) {
     };
     const signout = (req, res) => {
         req.session.destroy();
-        currentUser = null;
         res.sendStatus(200);
     };
     const profile = async (req, res) => {
