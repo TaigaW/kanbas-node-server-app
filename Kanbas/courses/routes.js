@@ -37,4 +37,10 @@ export default function CourseRoutes(app) {
         const courses = Database.courses;
         res.send(courses);
     });
+
+    app.get("/api/courses/:cid", (req, res) => {
+      const { cid } = req.params;
+      const course = Database.courses.filter((course) => course._id === cid);
+      res.send(course)
+    })
 }

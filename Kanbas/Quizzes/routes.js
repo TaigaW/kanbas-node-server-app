@@ -7,7 +7,7 @@ function QuizRoutes(app) {
     res.send(quizzes);
   });
 
-  app.get("api/quizzes/:qid/quizInfo", (req, res) => {
+  app.get("/api/quizzes/:qid/quizInfo", (req, res) => {
     const { qid } = req.params;
     const quiz = db.quizzes.filter((quiz) => quiz._id === qid);
     res.send(quiz)

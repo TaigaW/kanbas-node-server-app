@@ -13,11 +13,16 @@ export default function UserRoutes(app) {
         res.json(users);
     };
     
-    const findUserById = async (req, res) => { };
+    const findUserById = async (req, res) => {
+        const user = await dao.findUserById(req.params.userId);
+        res.json(user);
+      };
+    
     const updateUser = async (req, res) => {
         const { userId } = req.params;
         const status = await dao.updateUser(userId, req.body);
-        currentUser = await dao.findUserById(userId);
+        const currentUser = await dao.findUserById(userId);
+        req.session["currentUser"] = currentUser;
         res.json(status);
 
     };
@@ -55,10 +60,17 @@ export default function UserRoutes(app) {
         }
 
     };
+
+    const findUserByUsername = async (req, res) => {
+        const user = await dao.findUserByUsername(req.params.username);
+        res.json(user);
+      };
+
     app.post("/api/users", createUser);
     app.get("/api/users", findAllUsers);
+    app.get("/api/users/info/:username", findUserByUsername)
     app.get("/api/users/:userId", findUserById);
-    app.put("/api/users/:userId", updateUser);
+    app.put("/api/users/update/:userId", updateUser);
     app.delete("/api/users/:userId", deleteUser);
     app.post("/api/users/signup", signup);
     app.post("/api/users/signin", signin);
